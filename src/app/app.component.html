@@ -2,12 +2,12 @@
   <div *ngIf="movingTodo" class="moving-todo"
        [style.translate]="cMousePosition().x + 'px ' + cMousePosition().y + 'px'">
     <span class="checkbox" [class.done]="movingTodo.done"></span>
-    <span [class.checked]="movingTodo?.done">{{movingTodo?.text}}</span>
+    <span [class.checked]="movingTodo.done">{{movingTodo.text}}</span>
     <span class="remove-button">❌</span>
   </div>
 
   <section (mouseup)="sMovingTodo.set(undefined)">
-    <h1>Todo-list {{cMousePosition().x}}</h1>
+    <h1>Todo-list</h1>
     <div class="new-todo">
       <input type="text" [ngModel]="sNewTodo()" (ngModelChange)="sNewTodo.set($event)">
       <button (click)="todoListService.addTodo({text: sNewTodo(), done: false})">Add</button>
@@ -26,5 +26,4 @@
       </div>
     </div>
   </section>
-
 </ng-container>
