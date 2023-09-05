@@ -16,9 +16,7 @@ import { TodoItem } from './todo-list.service';
 import { Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TodoListRestService {
   // !!! post, put, patch responses should always contain updated object
 

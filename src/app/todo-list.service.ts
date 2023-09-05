@@ -1,10 +1,11 @@
-import { computed, signal } from '@angular/core';
+import { computed, Injectable, signal } from '@angular/core';
 
 export type TodoItem = {
   text: string;
   done: boolean;
 }
 
+@Injectable()
 export class TodoListService {
   readonly sTodoList = signal<TodoItem[]>([
     {text: 'Feed the dog.', done: true},
