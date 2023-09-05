@@ -20,7 +20,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   providedIn: 'root'
 })
 export class TodoListRestService {
-
   // !!! post, put, patch responses should always contain updated object
 
   private readonly polledTodoList$ = timer(1, 60000).pipe(
@@ -58,6 +57,7 @@ export class TodoListRestService {
         console.error('error', error);
         return of(null);
       }),
+      // this part is only necessary, because my simple json-server doesn't return all todos after the request
       withLatestFrom(this.todoList$),
       map(([todo, list]) => todo ? [...list, todo] : null)
     );
