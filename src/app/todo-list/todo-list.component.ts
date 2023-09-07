@@ -19,9 +19,9 @@ export class TodoListComponent {
   readonly mousePosition$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
     map(event => ({x: event.clientX, y: event.clientY}))
   );
-  cMousePosition = toSignal(this.mousePosition$, {initialValue: {x: 0, y: 0}});
+  readonly cMousePosition = toSignal(this.mousePosition$, {initialValue: {x: 0, y: 0}});
 
-  sNewTodo = signal('');
+  readonly sNewTodo = signal('');
   readonly sMovingTodo = signal<TodoItem | undefined>(undefined);
   constructor(public readonly todoListService: TodoListService) {
   }

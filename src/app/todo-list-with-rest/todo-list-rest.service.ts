@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   catchError,
   map,
-  of,
+  of, switchMap,
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -30,14 +30,13 @@ export class TodoListRestService {
     );
   }
 
-  addTodo(todo: TodoItem, currentList: TodoItem[]) {
+  addTodo(todo: TodoItem) {
     return this.http.post<TodoItem>('http://localhost:3000/todos', todo).pipe(
       catchError(error => {
         console.error('error', error);
         return of(null);
       }),
-      // this part is only necessary, because my simple json-server doesn't return all todos after the request
-      map((todo) => todo ? [...currentList, todo] : null)
+      switchMap(() => this.getTodoList())
     );
   }
 }

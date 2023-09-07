@@ -5,7 +5,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class TodoListService {
-
   private readonly polledTodoList$ = timer(1, 60000).pipe(
       switchMap(() => this.restService.getTodoList()),
       shareReplay(1)
@@ -13,7 +12,7 @@ export class TodoListService {
 
   readonly addTodoSubject = new Subject<TodoItem>();
   private readonly addTodo$ = this.addTodoSubject.pipe(
-      switchMap(todo => this.restService.addTodo(todo, this.cTodoList())),
+      switchMap(todo => this.restService.addTodo(todo)),
       shareReplay(1)
   );
 
