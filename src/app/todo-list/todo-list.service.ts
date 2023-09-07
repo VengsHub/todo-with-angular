@@ -7,7 +7,7 @@ export type TodoItem = {
 
 @Injectable()
 export class TodoListService {
-  readonly sTodoList = signal<TodoItem[]>([
+  private readonly sTodoList = signal<TodoItem[]>([
     {text: 'Feed the dog.', done: true},
     {text: 'Feed the cat.', done: false},
     {text: 'Feed myself.', done: false}
