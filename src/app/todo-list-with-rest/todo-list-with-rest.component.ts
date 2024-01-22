@@ -18,12 +18,18 @@ import { FormsModule } from '@angular/forms';
 })
 export class TodoListWithRestComponent {
   readonly mousePosition$ = fromEvent<MouseEvent>(document, 'mousemove').pipe(
-      map(event => ({x: event.clientX, y: event.clientY}))
+    map(event => ({x: event.clientX, y: event.clientY}))
   );
   cMousePosition = toSignal(this.mousePosition$, {initialValue: {x: 0, y: 0}});
 
   sNewTodo = signal('');
-  readonly sMovingTodo = signal<TodoItem | undefined>(undefined);
+  readonly sMovingTodo = signal<TodoItem|undefined>(undefined);
+
+  readonly cTodoList = toSignal(
+    this.todoListService.todoList$,
+    {initialValue: <TodoItem[]>[]}
+  );
+
   constructor(public readonly todoListService: TodoListService) {
   }
 }

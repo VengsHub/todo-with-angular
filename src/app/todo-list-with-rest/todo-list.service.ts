@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TodoItem, TodoListRestService } from './todo-list-rest.service';
 import { filter, merge, Observable, shareReplay, Subject, switchMap, timer } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class TodoListService {
@@ -21,9 +20,9 @@ export class TodoListService {
   readonly removeTodoSubject = new Subject<TodoItem>();
 
   readonly todoList$: Observable<TodoItem[]> = merge(this.polledTodoList$, this.addTodo$).pipe(
-      filter((list): list is TodoItem[] => !!list)
+      filter((list): list is TodoItem[] => !!list),
+      shareReplay(1)
   );
-  readonly cTodoList = toSignal(this.todoList$, {initialValue: <TodoItem[]>[]});
 
   constructor(private readonly restService: TodoListRestService) {
   }

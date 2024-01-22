@@ -13,7 +13,7 @@
             <button (click)="todoListService.addTodoSubject.next({text: sNewTodo(), done: false})">Add</button>
         </div>
 
-        <div *ngFor="let todo of todoListService.cTodoList(); let index = index" class="todo-container"
+        <div *ngFor="let todo of cTodoList(); let index = index" class="todo-container"
              (mouseenter)="movingTodo ? todoListService.moveTodoSubject.next({movingTodo, index}) : null">
             <div *ngIf="!movingTodo || todo.text !== movingTodo?.text" class="todo">
         <span class="checkbox" [class.done]="todo.done"
