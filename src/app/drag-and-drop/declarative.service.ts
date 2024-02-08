@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Item } from './item.model';
-import { map, Subject, switchMap, takeUntil } from 'rxjs';
+import { map, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { moveItem } from './helper-functions';
 
 @Injectable()
 export class DeclarativeService {
-  private readonly itemsS = new Subject<Item[]>();
+  // replace with observable from http request
+  private readonly items$ = of<Item[]>([])
 
   readonly dragStartS = new Subject<Item>();
   readonly dragOverS = new Subject<Item>();
@@ -18,7 +19,7 @@ export class DeclarativeService {
       ))
   );
 
-  readonly items$ = this.itemsS.pipe(
+  readonly currentItems$ = this.items$.pipe(
       switchMap(items => this.drag$.pipe(
           map(({item, moveTo}) => moveItem(items, item, moveTo))
       ))

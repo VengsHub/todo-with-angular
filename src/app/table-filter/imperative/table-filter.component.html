@@ -1,0 +1,8 @@
+<form>
+    <input type="text" [(ngModel)]="filter" (ngModelChange)="filterItems()">
+</form>
+<table>
+    <tr *ngFor="let item of filteredItems">
+        <td>{{item.text}}</td>
+    </tr>
+</table>
