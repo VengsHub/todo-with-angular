@@ -1,29 +1,31 @@
 <ng-container *ngLet="sMovingTodo() as movingTodo">
-    <div *ngIf="movingTodo" class="moving-todo"
-         [style.translate]="cMousePosition().x + 'px ' + cMousePosition().y + 'px'">
-        <span class="checkbox" [class.done]="movingTodo.done"></span>
-        <span [class.checked]="movingTodo.done">{{movingTodo.text}}</span>
-        <span class="remove-button">❌</span>
+  <div *ngIf="movingTodo" class="moving-todo"
+       [style.translate]="cMousePosition().x + 'px ' + cMousePosition().y + 'px'">
+    <span class="checkbox" [class.done]="movingTodo.done"></span>
+    <span [class.checked]="movingTodo.done">{{movingTodo.text}}</span>
+    <span class="remove-button">❌</span>
+  </div>
+
+  <section (mouseup)="sMovingTodo.set(undefined)">
+    <h1>Todo-list</h1>
+    <div class="new-todo">
+      <input type="text" [ngModel]="sNewTodo()" (ngModelChange)="sNewTodo.set($event)">
+      <button
+        (click)="todoListService.addTodoSubject.next({id: cTodoList().length + 1, text: sNewTodo(), done: false})">Add
+      </button>
     </div>
 
-    <section (mouseup)="sMovingTodo.set(undefined)">
-        <h1>Todo-list</h1>
-        <div class="new-todo">
-            <input type="text" [ngModel]="sNewTodo()" (ngModelChange)="sNewTodo.set($event)">
-            <button (click)="todoListService.addTodoSubject.next({id: cTodoList().length, text: sNewTodo(), done: false})">Add</button>
-        </div>
-
-        <div *ngFor="let todo of cTodoList(); let index = index" class="todo-container"
-             (mouseenter)="movingTodo ? todoListService.moveTodoSubject.next({movingTodo, index}) : null">
-            <div *ngIf="!movingTodo || todo.text !== movingTodo?.text" class="todo">
+    <div *ngFor="let todo of cTodoList(); let index = index" class="todo-container"
+         (mouseenter)="movingTodo ? todoListService.moveTodoSubject.next({todo: movingTodo, index}) : null">
+      <div *ngIf="!movingTodo || todo.text !== movingTodo?.text" class="todo">
         <span class="checkbox" [class.done]="todo.done"
               (click)="todoListService.updateTodoStatusSubject.next({todo, status: !todo.done})">
         </span>
-                <span class="todo-text" (mousedown)="sMovingTodo.set(todo)">
+        <span class="todo-text" (mousedown)="sMovingTodo.set(todo)">
           <p [class.checked]="todo.done">{{todo.text}}</p>
         </span>
-                <span class="remove-button" (click)="todoListService.removeTodoSubject.next(todo)">❌</span>
-            </div>
-        </div>
-    </section>
+        <span class="remove-button" (click)="todoListService.removeTodoSubject.next(todo)">❌</span>
+      </div>
+    </div>
+  </section>
 </ng-container>
