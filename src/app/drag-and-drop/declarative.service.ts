@@ -5,17 +5,17 @@ import { moveItem } from './helper-functions';
 
 @Injectable()
 export class DeclarativeService {
-  // replace with observable from http request
+  // can be replaced with observable from http request
   private readonly items$ = of<Item[]>([])
 
-  readonly dragStartS = new Subject<Item>();
-  readonly dragOverS = new Subject<Item>();
-  readonly dropS = new Subject<void>();
+  readonly dragStart$ = new Subject<Item>();
+  readonly dragOver$ = new Subject<Item>();
+  readonly drop$ = new Subject<void>();
 
-  private readonly drag$ = this.dragStartS.pipe(
-      switchMap(item => this.dragOverS.pipe(
+  private readonly drag$ = this.dragStart$.pipe(
+      switchMap(item => this.dragOver$.pipe(
           map(hoveredItem => ({item, moveTo: hoveredItem.index})),
-          takeUntil(this.dropS)
+          takeUntil(this.drop$)
       ))
   );
 

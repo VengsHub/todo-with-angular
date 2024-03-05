@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import {
-  catchError,
-  map,
-  of, switchMap,
+  catchError, EMPTY,
+  map, switchMap,
 } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 export type TodoItem = {
+  id: number;
   text: string;
   done: boolean;
 }
@@ -21,20 +21,22 @@ export class TodoListRestService {
   }
 
   getTodoList() {
-    return this.http.get<TodoItem[]>('http://localhost:3000/todos', {observe: 'response'}).pipe(
-      map(response => response.body),
+    return this.http.get<{todos: TodoItem[]}[]>('http://localhost:3000/api', {observe: 'response'}).pipe(
+      map(response => {
+        return response.body ? response.body[0].todos : [];
+      }),
       catchError(error => {
         console.error('error', error);
-        return of(null);
+        return EMPTY;
       })
     );
   }
 
-  addTodo(todo: TodoItem) {
-    return this.http.post<TodoItem>('http://localhost:3000/todos', todo).pipe(
+  updateTodoList(todos: TodoItem[]) {
+    return this.http.patch<TodoItem>('http://localhost:3000/api/1', {todos}).pipe(
       catchError(error => {
         console.error('error', error);
-        return of(null);
+        return EMPTY;
       }),
       switchMap(() => this.getTodoList())
     );

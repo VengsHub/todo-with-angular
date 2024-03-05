@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, of } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, of, switchMap, withLatestFrom } from 'rxjs';
 import { AsyncPipe, NgForOf } from '@angular/common';
 import { Item } from '../../drag-and-drop/item.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

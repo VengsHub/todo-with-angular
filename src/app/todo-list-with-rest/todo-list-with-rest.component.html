@@ -10,7 +10,7 @@
         <h1>Todo-list</h1>
         <div class="new-todo">
             <input type="text" [ngModel]="sNewTodo()" (ngModelChange)="sNewTodo.set($event)">
-            <button (click)="todoListService.addTodoSubject.next({text: sNewTodo(), done: false})">Add</button>
+            <button (click)="todoListService.addTodoSubject.next({id: cTodoList().length, text: sNewTodo(), done: false})">Add</button>
         </div>
 
         <div *ngFor="let todo of cTodoList(); let index = index" class="todo-container"

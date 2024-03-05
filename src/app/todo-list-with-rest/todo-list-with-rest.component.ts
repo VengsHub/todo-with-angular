@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
 import { fromEvent, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -31,5 +31,8 @@ export class TodoListWithRestComponent {
   );
 
   constructor(public readonly todoListService: TodoListService) {
+    effect(() => {
+      console.log('todo list', this.cTodoList());
+    });
   }
 }
