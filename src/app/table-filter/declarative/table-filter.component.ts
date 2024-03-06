@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { BehaviorSubject, combineLatest, map, of, switchMap, withLatestFrom } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, of, startWith, switchMap, withLatestFrom } from 'rxjs';
 import { AsyncPipe, NgForOf } from '@angular/common';
-import { Item } from '../../drag-and-drop/item.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 
 
 @Component({
@@ -22,17 +22,44 @@ export class TableFilterComponent {
 
   // GOOD
   // state changes defined during declaration -> one way data flow -> functional & safe
-  readonly items$ = of<Item[]>([]);
+  readonly items$ = of<TodoItem[]>([
+    {
+      id: 2,
+      text: "Feed the cat.",
+      done: false
+    },
+    {
+      id: 1,
+      text: "Feed the dog.",
+      done: true
+    },
+    {
+      id: 3,
+      text: "Feed myself.",
+      done: false
+    }
+  ]);
   readonly filteredItems$ = combineLatest({
     items: this.items$,
-    filter: this.filter.valueChanges
+    filter: this.filter.valueChanges.pipe(startWith(''))
   }).pipe(
       map(({items, filter}) => items.filter(item => item.text.includes(filter)))
   );
 
+  /* ------------------------------------- */
+  /* ------------------------------------- */
+  /* ------------------------------------- */
+  /* ------------------------------------- */
+
   // BAD
   // state change in subscribe -> risk of two-way data flow -> danger of recursion and messy state
-  itemsS = new BehaviorSubject<Item[]>([]);
+  itemsS = new BehaviorSubject<TodoItem[]>([]);
+
+  initialItems$ = of(<TodoItem[]>[]);
+  items2$ = this.filter.valueChanges.pipe(
+    withLatestFrom(this.initialItems$),
+    switchMap(([filter, items]) => items.filter(item => item.text.includes(filter)))
+  );
   constructor() {
     this.filter.valueChanges.pipe(takeUntilDestroyed()).subscribe(filter => {
       this.itemsS.next(this.itemsS.value.filter(item => item.text.includes(filter)));
