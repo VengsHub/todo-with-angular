@@ -39,6 +39,7 @@ export class TableFilterComponent {
       done: false
     }
   ]);
+
   readonly filteredItems$ = combineLatest({
     items: this.items$,
     filter: this.filter.valueChanges.pipe(startWith(''))

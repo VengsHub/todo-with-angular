@@ -28,7 +28,7 @@ export class DragAndDropService {
 
   dragOver(index: number) {
     if (this.draggingItem) {
-      this.moveTodoInList(this.items, this.draggingItem, index);
+      this.items = this.moveTodoInList(this.items, this.draggingItem, index);
     }
   }
 
