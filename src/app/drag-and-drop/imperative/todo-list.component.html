@@ -1,0 +1,24 @@
+<ng-container *ngLet="sMovingTodo() as movingTodo">
+  <div *ngIf="movingTodo" class="moving-todo"
+       [style.translate]="cMousePosition().x + 'px ' + cMousePosition().y + 'px'">
+    <span class="checkbox" [class.done]="movingTodo.done"></span>
+    <span [class.checked]="movingTodo.done">{{movingTodo.text}}</span>
+    <span class="remove-button">❌</span>
+  </div>
+
+  <section (mouseup)="drop()">
+    <h1>Todo-list</h1>
+
+    <div *ngFor="let todo of dragAndDropService.items; let index = index" class="todo-container"
+         (mouseenter)="dragOver(index)">
+      <div *ngIf="!movingTodo || todo.text !== movingTodo?.text" class="todo">
+        <span class="checkbox" [class.done]="todo.done">
+        </span>
+        <span class="todo-text" (mousedown)="dragStart(todo)">
+          <p [class.checked]="todo.done">{{todo.text}}</p>
+        </span>
+        <span class="remove-button">❌</span>
+      </div>
+    </div>
+  </section>
+</ng-container>

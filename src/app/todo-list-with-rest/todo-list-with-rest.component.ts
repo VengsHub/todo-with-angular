@@ -4,14 +4,13 @@ import { fromEvent, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TodoListService } from './todo-list.service';
 import { TodoItem } from './todo-list-rest.service';
-import { RouterOutlet } from '@angular/router';
 import { NgLetModule } from 'ng-let';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-todo-list-with-rest',
   standalone: true,
-  imports: [NgIf, NgFor, RouterOutlet, NgLetModule, FormsModule],
+  imports: [NgIf, NgFor, NgLetModule, FormsModule],
   providers: [TodoListService],
   templateUrl: './todo-list-with-rest.component.html',
   styleUrls: ['./todo-list-with-rest.component.scss']
