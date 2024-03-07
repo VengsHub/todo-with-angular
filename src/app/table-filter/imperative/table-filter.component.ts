@@ -34,7 +34,7 @@ export class TableFilterComponent {
       done: false
     }
   ];
-  filteredItems: TodoItem[] = this.items.filter(item => item.text.includes(this.filter));
+  filteredItems: TodoItem[] = this.items;
 
   filterItems() {
     this.filteredItems = this.items.filter(item => item.text.includes(this.filter));
