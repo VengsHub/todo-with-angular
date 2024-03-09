@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
-import { Item } from '../../drag-and-drop/item.model';
 import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 
 
@@ -17,6 +16,7 @@ import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 })
 export class TableFilterComponent {
   filter = '';
+  filter2 = '';
   items: TodoItem[] = [
     {
       id: 2,
@@ -37,6 +37,11 @@ export class TableFilterComponent {
   filteredItems: TodoItem[] = this.items;
 
   filterItems() {
-    this.filteredItems = this.items.filter(item => item.text.includes(this.filter));
+    this.filteredItems = this.items.filter(item => item.text.toLowerCase().includes(this.filter.toLowerCase()));
+  }
+
+  filterItemsDifferently() {
+    this.filteredItems = this.items.filter(item => item.text.toUpperCase().includes(this.filter2));
+    // this.filteredItems = this.filteredItems.filter(item => item.text.toUpperCase().includes(this.filter2));
   }
 }

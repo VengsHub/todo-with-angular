@@ -1,5 +1,6 @@
 <form>
     <input type="text" [(ngModel)]="filter" (ngModelChange)="filterItems()" [ngModelOptions]="{standalone: true}">
+    <input type="text" [(ngModel)]="filter2" (ngModelChange)="filterItemsDifferently()" [ngModelOptions]="{standalone: true}">
 </form>
 <table>
     <tr *ngFor="let item of filteredItems">

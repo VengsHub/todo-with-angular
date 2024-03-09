@@ -19,32 +19,44 @@ import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 })
 export class TableFilterComponent {
   readonly filter = new FormControl('', {nonNullable: true});
+  readonly filter2 = new FormControl('', {nonNullable: true});
 
   // GOOD
   // state changes defined during declaration -> one way data flow -> functional & safe
-  readonly items$ = of<TodoItem[]>([
+  private readonly items$ = of<TodoItem[]>([
     {
       id: 2,
-      text: "Feed the cat.",
+      text: 'Feed the cat.',
       done: false
     },
     {
       id: 1,
-      text: "Feed the dog.",
+      text: 'Feed the dog.',
       done: true
     },
     {
       id: 3,
-      text: "Feed myself.",
+      text: 'Feed myself.',
       done: false
     }
   ]);
 
-  readonly filteredItems$ = combineLatest({
+  private readonly filteredItems$ = combineLatest({
     items: this.items$,
     filter: this.filter.valueChanges.pipe(startWith(''))
   }).pipe(
-      map(({items, filter}) => items.filter(item => item.text.includes(filter)))
+    map(({items, filter}) =>
+      items.filter(item => item.text.toLowerCase().includes(filter.toLowerCase()))
+    )
+  );
+
+  readonly filteredItems2$ = combineLatest({
+    items: this.filteredItems$,
+    filter: this.filter2.valueChanges.pipe(startWith(''))
+  }).pipe(
+    map(({items, filter}) =>
+      items.filter(item => item.text.toUpperCase().includes(filter))
+    )
   );
 
   /* ------------------------------------- */
@@ -56,11 +68,6 @@ export class TableFilterComponent {
   // state change in subscribe -> risk of two-way data flow -> danger of recursion and messy state
   itemsS = new BehaviorSubject<TodoItem[]>([]);
 
-  initialItems$ = of(<TodoItem[]>[]);
-  items2$ = this.filter.valueChanges.pipe(
-    withLatestFrom(this.initialItems$),
-    switchMap(([filter, items]) => items.filter(item => item.text.includes(filter)))
-  );
   constructor() {
     this.filter.valueChanges.pipe(takeUntilDestroyed()).subscribe(filter => {
       this.itemsS.next(this.itemsS.value.filter(item => item.text.includes(filter)));
