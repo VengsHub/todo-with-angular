@@ -1,9 +1,9 @@
 <form>
-    <input type="text" [formControl]="filter">
-    <input type="text" [formControl]="filter2">
+  <input type="text" [formControl]="filter">
+  <input type="text" [formControl]="filter2">
 </form>
 <table>
-    <tr *ngFor="let item of filteredItems2$ | async">
-        <td>{{item.text}}</td>
-    </tr>
+  <tr *ngFor="let item of filteredItems2$ | async">
+    <td>{{item.text}}</td>
+  </tr>
 </table>
