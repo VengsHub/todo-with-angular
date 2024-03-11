@@ -19,7 +19,6 @@ import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 })
 export class TableFilterComponent {
   readonly filter = new FormControl('', {nonNullable: true});
-  readonly filter2 = new FormControl('', {nonNullable: true});
 
   // GOOD
   // state changes defined during declaration -> one way data flow -> functional & safe
@@ -57,11 +56,11 @@ export class TableFilterComponent {
 
   // BAD
   // state change in subscribe -> risk of two-way data flow -> danger of recursion and messy state
-  itemsS = new BehaviorSubject<TodoItem[]>([]);
+  items2$ = new BehaviorSubject<TodoItem[]>([]);
 
   constructor() {
     this.filter.valueChanges.pipe(takeUntilDestroyed()).subscribe(filter => {
-      this.itemsS.next(this.itemsS.value.filter(item => item.text.includes(filter)));
+      this.items2$.next(this.items2$.value.filter(item => item.text.includes(filter)));
     });
 
     // this.itemsS.subscribe(() => this.filter.setValue('')); // <-- ERROR

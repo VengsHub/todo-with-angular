@@ -16,7 +16,6 @@ import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 })
 export class TableFilterComponent {
   filter = '';
-  filter2 = '';
   items: TodoItem[] = [
     {
       id: 2,
