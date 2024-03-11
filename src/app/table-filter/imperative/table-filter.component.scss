@@ -1,15 +1,9 @@
 :host {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   align-items: center;
   padding: 20px;
-}
-
-form {
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 td {
