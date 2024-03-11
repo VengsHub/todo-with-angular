@@ -41,24 +41,12 @@ export class TableFilterComponent {
     }
   ]);
 
-  private readonly filteredItems$ = combineLatest({
+  protected readonly filteredItems$ = combineLatest({
     filter: this.filter.valueChanges.pipe(startWith('')),
     items: this.items$
   }).pipe(
-    map(({items, filter}) =>
+    map(({filter, items}) =>
       items.filter(item => item.text.toLowerCase().includes(filter.toLowerCase()))
-    )
-  );
-
-  protected readonly filteredItems2$ = combineLatest({
-    filter: this.filter.valueChanges.pipe(startWith('')),
-    filter2: this.filter2.valueChanges.pipe(startWith('')),
-    items: this.items$
-  }).pipe(
-    map(({items, filter, filter2}) =>
-      items.filter(item =>
-        item.text.toLowerCase().includes(filter.toLowerCase()) && item.text.includes(filter2)
-      )
     )
   );
 

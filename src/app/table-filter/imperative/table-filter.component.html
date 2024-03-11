@@ -1,9 +1,6 @@
-<form>
-    <input type="text" [(ngModel)]="filter" (ngModelChange)="filterItems()" [ngModelOptions]="{standalone: true}">
-    <input type="text" [(ngModel)]="filter2" (ngModelChange)="filterItemsDifferently()" [ngModelOptions]="{standalone: true}">
-</form>
+<input type="text" [(ngModel)]="filter" (ngModelChange)="filterItems()" [ngModelOptions]="{standalone: true}">
 <table>
-    <tr *ngFor="let item of filteredItems">
-        <td>{{item.text}}</td>
-    </tr>
+  <tr *ngFor="let item of filteredItems">
+    <td>{{item.text}}</td>
+  </tr>
 </table>

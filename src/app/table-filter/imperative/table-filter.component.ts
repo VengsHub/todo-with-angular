@@ -39,9 +39,4 @@ export class TableFilterComponent {
   filterItems() {
     this.filteredItems = this.items.filter(item => item.text.toLowerCase().includes(this.filter.toLowerCase()));
   }
-
-  filterItemsDifferently() {
-    this.filteredItems = this.items.filter(item => item.text.toUpperCase().includes(this.filter2));
-    // this.filteredItems = this.filteredItems.filter(item => item.text.toUpperCase().includes(this.filter2));
-  }
 }
