@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
+import { mockTodoItems } from '../../../mock';
 
 
 @Component({
@@ -16,23 +17,7 @@ import { TodoItem } from '../../todo-list-with-rest/todo-list-rest.service';
 })
 export class TableFilterComponent {
   filter = '';
-  items: TodoItem[] = [
-    {
-      id: 2,
-      text: "Feed the cat.",
-      done: false
-    },
-    {
-      id: 1,
-      text: "Feed the dog.",
-      done: true
-    },
-    {
-      id: 3,
-      text: "Feed myself.",
-      done: false
-    }
-  ];
+  readonly items: TodoItem[] = mockTodoItems;
   filteredItems: TodoItem[] = this.items;
 
   filterItems() {
